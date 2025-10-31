@@ -3,6 +3,7 @@
 ## Gereksinimler
 
 Sunucunuzda aşağıdakilerin yüklü olması gerekir:
+
 - Node.js (v18+)
 - PM2 (`npm install -g pm2`)
 - Git
@@ -10,22 +11,26 @@ Sunucunuzda aşağıdakilerin yüklü olması gerekir:
 ## Sunucuda İlk Kurulum
 
 1. Projeyi sunucuya klonlayın:
+
 ```bash
 git clone https://github.com/username/ears.git
 cd ears
 ```
 
 2. Bağımlılıkları yükleyin:
+
 ```bash
 npm install
 ```
 
 3. Projeyi build edin:
+
 ```bash
 npm run build
 ```
 
 4. PM2 ile başlatın:
+
 ```bash
 npm run pm2:start
 ```
@@ -35,16 +40,19 @@ npm run pm2:start
 Kodda değişiklik yaptıktan sonra:
 
 1. Sunucuda git pull:
+
 ```bash
 git pull origin main
 ```
 
 2. Projeyi yeniden build edin:
+
 ```bash
 npm run build
 ```
 
 3. PM2'yi yeniden başlatın:
+
 ```bash
 npm run pm2:reload
 ```
@@ -101,17 +109,20 @@ sudo certbot --nginx -d yourdomain.com
 ## Monitoring
 
 PM2 monitoring dashboard:
+
 ```bash
 pm2 web
 ```
 
 ## Troubleshooting
 
-1. **Port kullanımda hatası**: 
+1. **Port kullanımda hatası**:
+
    - `lsof -i :3000` ile portu kontrol edin
    - `pm2 stop all` ile tüm PM2 processlerini durdurun
 
 2. **Memory sızıntısı**:
+
    - `ecosystem.config.js` dosyasında `max_memory_restart` ayarı vardır (1G)
 
 3. **Build hatası**:

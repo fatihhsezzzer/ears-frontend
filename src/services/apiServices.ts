@@ -12,7 +12,6 @@ import {
   Galeri,
   GaleriTag,
   Reference,
-  Service,
   ServiceApiResponse,
   Setting,
   Testimonial,

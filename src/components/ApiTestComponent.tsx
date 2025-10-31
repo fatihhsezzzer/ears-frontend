@@ -53,11 +53,11 @@ export default function ApiTestComponent() {
         {faqs && faqs.length > 0 ? (
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <div key={faq.id} className="border p-4 rounded-lg">
-                <h3 className="font-semibold">{faq.question}</h3>
-                <p className="text-gray-600 mt-2">{faq.answer}</p>
+              <div key={faq.faqId} className="border p-4 rounded-lg">
+                <h3 className="font-semibold">{faq.questionTr || faq.questionEn}</h3>
+                <p className="text-gray-600 mt-2">{faq.answerTr || faq.answerEn}</p>
                 <p className="text-sm text-gray-500">
-                  Language: {faq.language}
+                  Order: {faq.sortOrder}
                 </p>
               </div>
             ))}

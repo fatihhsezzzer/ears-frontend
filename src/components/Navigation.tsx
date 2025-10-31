@@ -12,7 +12,7 @@ export default function Navigation() {
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [hoverTimeout, setHoverTimeout] = useState<NodeJS.Timeout | null>(null);
   const { t, language } = useLanguage();
-  const { services, loading, error } = useServices();
+  const { services, loading } = useServices();
 
   // Helper function to get service name based on current language
   const getServiceName = (service: {

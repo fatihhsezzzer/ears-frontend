@@ -10,7 +10,7 @@ import type {
   Galeri,
   GaleriTag,
   Reference,
-  Service,
+  ServiceApiResponse,
   Setting,
   Testimonial,
 } from "@/types/api";
@@ -35,6 +35,36 @@ function useApiData<T>(
         } else {
           setError("Failed to fetch data");
         }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "An error occurred");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+
+  return { data, loading, error, refetch: () => setLoading(true) };
+}
+
+// Generic hook for direct API data (without ApiResponse wrapper)
+function useDirectApiData<T>(
+  fetchFunction: () => Promise<T>,
+  deps: unknown[] = []
+) {
+  const [data, setData] = useState<T | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await fetchFunction();
+        setData(response);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -79,9 +109,15 @@ export function useBlogs() {
     [language]
   );
 
-  // Filter blogs by current language
+  // Filter blogs by current language - check if blog has content in the current language
   const filteredBlogs =
-    data?.filter((blog) => blog.language === language) || [];
+    data?.filter((blog) => {
+      if (language === "tr") {
+        return blog.titleTr && blog.descriptionTr;
+      } else {
+        return blog.titleEn && blog.descriptionEn;
+      }
+    }) || [];
 
   return {
     blogs: filteredBlogs,
@@ -110,13 +146,19 @@ export function useBlog(id: number) {
 export function useFaqs() {
   const { language } = useLanguage();
 
-  const { data, loading, error, refetch } = useApiData<Faq[]>(
+  const { data, loading, error, refetch } = useDirectApiData<Faq[]>(
     () => apiServices.faq.getPublicFaqs(),
     [language]
   );
 
-  // Filter FAQs by current language
-  const filteredFaqs = data?.filter((faq) => faq.language === language) || [];
+  // Filter FAQs by current language - check if FAQ has content in the current language
+  const filteredFaqs = data?.filter((faq) => {
+    if (language === "tr") {
+      return faq.questionTr && faq.answerTr;
+    } else {
+      return faq.questionEn && faq.answerEn;
+    }
+  }) || [];
 
   return {
     faqs: filteredFaqs,
@@ -165,9 +207,14 @@ export function useReferences() {
     [language]
   );
 
-  // Filter references by current language
-  const filteredReferences =
-    data?.filter((ref) => ref.language === language) || [];
+  // Filter references by current language - check if reference has content in the current language
+  const filteredReferences = data?.filter((ref) => {
+    if (language === "tr") {
+      return ref.testimonialTr;
+    } else {
+      return ref.testimonialEn;
+    }
+  }) || [];
 
   return {
     references: filteredReferences,
@@ -181,14 +228,19 @@ export function useReferences() {
 export function useServices() {
   const { language } = useLanguage();
 
-  const { data, loading, error, refetch } = useApiData<Service[]>(
+  const { data, loading, error, refetch } = useDirectApiData<ServiceApiResponse[]>(
     () => apiServices.service.getPublicServices(),
     [language]
   );
 
-  // Filter services by current language
-  const filteredServices =
-    data?.filter((service) => service.language === language) || [];
+  // Filter services by current language - check if service has content in the current language
+  const filteredServices = data?.filter((service) => {
+    if (language === "tr") {
+      return service.nameTr;
+    } else {
+      return service.nameEn;
+    }
+  }) || [];
 
   return {
     services: filteredServices,

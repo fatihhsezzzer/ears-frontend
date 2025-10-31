@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function AboutUsPage() {
@@ -216,12 +217,12 @@ export default function AboutUsPage() {
               {t.aboutUs.cta.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md sm:max-w-none mx-auto">
-              <a
+              <Link
                 href="/products"
-                className="bg-black text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg hover:bg-gray-800 transition-colors rounded-lg"
+                className="bg-black text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg hover:bg-gray-800 transition-colors rounded-lg inline-block text-center"
               >
                 {t.aboutUs.cta.productsButton}
-              </a>
+              </Link>
               <a
                 href="/contact"
                 className="border-2 border-black text-black px-6 sm:px-8 py-3 sm:py-4 font-semibold text-base sm:text-lg hover:bg-black hover:text-white transition-colors rounded-lg"

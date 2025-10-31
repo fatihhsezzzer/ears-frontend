@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { ServiceService } from "@/services/apiServices";
 import { ServiceApiResponse } from "@/types/api";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 export function useServices() {
   const [services, setServices] = useState<ServiceApiResponse[]>([]);

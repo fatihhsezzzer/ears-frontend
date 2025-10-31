@@ -115,9 +115,11 @@ export class ProductDirectService {
   }
 
   // Get products by category (simulate with services)
-  static async getProductsByCategory(_categoryId: number): Promise<Product[]> {
+  static async getProductsByCategory(categoryId: number): Promise<Product[]> {
     try {
       // Şimdilik tüm ürünleri döndür, kategorileme işlemi daha sonra eklenebilir
+      // TODO: Category filtering will be implemented when backend supports it
+      console.log("Requested category ID:", categoryId);
       const allProducts = await this.getPublicProducts();
       console.log("Products by Category (All Services):", allProducts);
 
